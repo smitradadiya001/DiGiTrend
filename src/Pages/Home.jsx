@@ -4,6 +4,9 @@ import Hero from '../Component/Hero'
 import Logo from '../Component/Logo'
 import Third from '../Component/Third'
 import { Bubbles } from 'lucide-react'
+import FeatureCards from '../Component/Feature'
+import SpiralBrands from '../Component/Spiral'
+
 
 
 
@@ -15,7 +18,9 @@ function Home() {
       <Logo />
       </div>  
       <Third /> 
-    <Bubbles/>  
+      <FeatureCards />
+      <SpiralBrands />
+   
           </>
   )
 }

@@ -22,7 +22,7 @@ const WiproLogo = () => (
 
     {/* WIPRO text */}
     <text x="0" y="42" fontFamily="'Inter', sans-serif" fontSize="38" fontWeight="700" fill="#3B1F8E" letterSpacing="-1">
-      wipro
+      DiGiTrend
     </text>
   </svg>
 )

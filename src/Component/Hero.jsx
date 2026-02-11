@@ -18,8 +18,8 @@ const Hero = () => {
     { id: "pill-3", duration: 1500, pill: "AI platforms", sub: "scale." },
     { id: "pill-4", duration: 1500, pill: "AI solutions", sub: "consulting-led." },
     { id: "pill-5", duration: 1500, pill: "AI solutions", sub: "industry-focused." },
-    { id: "pill-6", duration: 1500, pill: "wipro: innovation network", sub: "co-innovate." },
-    { id: "pill-7", duration: 1500, pill: "wipro: innovation network", sub: "reimagine." },
+    { id: "pill-6", duration: 1500, pill: "DiGi-Trend: innovation network", sub: "co-innovate." },
+    { id: "pill-7", duration: 1500, pill: "DiGi-Trend: innovation network", sub: "reimagine." },
     { id: "transition", duration: 400 },
     { id: "lead", duration: 1800 },
     { id: "trust", duration: 1800 },
@@ -80,7 +80,7 @@ const Hero = () => {
             exit={{ opacity: 0 }}
             className="flex items-center gap-3"
           >
-            <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">wipro</span>
+            <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">DiGi Trend</span>
             <Dots />
             <span 
               className="text-6xl md:text-7xl font-light bg-clip-text text-transparent"
@@ -258,7 +258,7 @@ const Hero = () => {
             className="flex flex-col items-center gap-6"
           >
             <div className="flex items-center gap-4">
-              <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">wipro</span>
+              <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">DiGi Trend</span>
               <Dots />
               <span className="text-6xl md:text-7xl font-light text-[#2E1A47]">intelligence</span>
             </div>
@@ -276,7 +276,7 @@ const Hero = () => {
             className="flex flex-col items-center gap-6"
           >
             <div className="flex items-center gap-4">
-              <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">wipro</span>
+              <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">DiGi Trend</span>
               <Dots />
               <span className="text-6xl md:text-7xl font-light text-[#2E1A47]">intelligence</span>
             </div>
@@ -294,7 +294,7 @@ const Hero = () => {
             className="flex flex-col items-center gap-8"
           >
             <div className="flex items-center gap-4">
-              <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">wipro</span>
+              <span className="text-6xl md:text-7xl font-bold text-[#2E1A47]">DiGi Trend</span>
               <Dots />
             </div>
             <p className="text-2xl text-gray-500 font-light">consulting • technology •</p>
@@ -341,7 +341,7 @@ const Hero = () => {
             transition={{ duration: 0.6 }}
             className="flex flex-col md:flex-row items-center gap-6"
           >
-            <span className="text-7xl md:text-9xl font-bold text-[#2E1A47] tracking-tight">wipro</span>
+            <span className="text-7xl md:text-9xl font-bold text-[#2E1A47] tracking-tight">DiGi Trend</span>
             <Dots size="w-20 h-20 md:w-28 md:h-28" />
             <span className="text-7xl md:text-9xl font-light text-[#2E1A47] tracking-tight">intelligence</span>
           </motion.div>
