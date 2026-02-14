@@ -25,7 +25,8 @@ function Home() {
       <SpiralBrands />
       <DesignShowcase />
       <ServicesComponent />
-      <OurWork/>
+      <OurWork />
+      
       
           </>
   )

@@ -42,7 +42,7 @@ const PROJECTS = [
     title: "Probize",
     category: "UI/UX",
     image:
-      "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=1000&auto=format&fit=crop",
   },
 ];
 
@@ -55,76 +55,82 @@ export default function OurWork() {
   });
 
   const smooth = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 30,
+    stiffness: 100,
+    damping: 50,
   });
 
-  // Only 1 clean rotation
-  const rotateY = useTransform(smooth, [0, 1], [0, -360]);
+  const rotateY = useTransform(smooth, [0, 1], [0, -280]);
 
-  // Perfect center vertical motion
-  const yMove = useTransform(smooth, [0, 1], [0, -450]);
+  const yMove = useTransform(smooth, [0, 1], [0, -180]);
 
   return (
-    <div ref={containerRef} className="relative h-[320vh] bg-white">
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center">
-
-        {/* HARD MASK CLIPPING */}
-        <div className="relative w-full h-full flex items-center justify-center overflow-hidden">
-
-          <div
-            className="relative w-full h-full flex items-center justify-center"
-            style={{ perspective: "1400px" }}
+    <div
+      ref={containerRef}
+      className="relative h-[220vh] bg-white"
+    >
+      <div className=" sticky text-5xl md:text-7xl font-semibold text-gray-900 text-center ">Our Best Work</div>
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+        <div
+          className="relative w-full h-full flex items-center justify-center"
+          style={{ perspective: "1200px" }}
+        >
+          <motion.div
+            style={{
+              rotateY,
+              y: yMove,
+              transformStyle: "preserve-3d",
+            }}
+            className="relative w-0 h-0"
           >
-            <motion.div
-              style={{
-                rotateY,
-                y: yMove,
-                transformStyle: "preserve-3d",
-              }}
-              className="relative w-0 h-0"
-            >
-              {PROJECTS.map((project, index) => {
-                const angle = (360 / PROJECTS.length) * index;
-                const vertical = index * 120;
+            {PROJECTS.map((project, index) => {
+              const angle =
+                (360 / PROJECTS.length) * index;
 
-                return (
+              // Smaller vertical spacing
+              const totalHeight =
+                (PROJECTS.length - 1) * 80;
+
+              const vertical =
+                index * 80 - totalHeight / 2;
+
+              return (
+                <div
+                  key={project.id}
+                  className="absolute"
+                  style={{
+                    transform: `
+                      rotateY(${angle}deg)
+                      translateY(${vertical}px)
+                    `,
+                    transformStyle: "preserve-3d",
+                  }}
+                >
                   <div
-                    key={project.id}
-                    className="absolute"
+                    className="w-[260px] h-[260px] rounded-xl overflow-hidden shadow-xl"
                     style={{
-                      transform: `rotateY(${angle}deg) translateY(${vertical}px)`,
-                      transformStyle: "preserve-3d",
+                      transform: "translateZ(360px)", // 🔥 reduced radius
+                      backfaceVisibility: "hidden",
                     }}
                   >
-                    <div
-                      className="w-[220px] h-[300px] rounded-2xl overflow-hidden shadow-2xl"
-                      style={{
-                        transform: "translateZ(400px)",
-                        backfaceVisibility: "hidden",
-                      }}
-                    >
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover"
-                      />
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                    />
 
-                      <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white text-center p-4">
-                        <p className="text-[10px] tracking-widest mb-1 opacity-80">
-                          {project.category}
-                        </p>
-                        <h3 className="text-xl font-bold">
-                          {project.title}
-                        </h3>
-                      </div>
+                    <div className="absolute inset-0 bg-black/30 flex flex-col items-center justify-center text-white text-center p-4">
+                      <p className="text-[10px] tracking-widest mb-1 opacity-80">
+                        {project.category}
+                      </p>
+                      <h3 className="text-lg font-bold">
+                        {project.title}
+                      </h3>
                     </div>
                   </div>
-                );
-              })}
-            </motion.div>
-          </div>
-
+                </div>
+              );
+            })}
+          </motion.div>
         </div>
       </div>
     </div>
