@@ -21,8 +21,8 @@ export default function HangingImages({ id }) {
   }, []);
 
   // 🔥 Smaller cards on mobile
-  const cardW = isMobile ? 130 : 160;
-  const cardH = isMobile ? 150 : 190;
+  const cardW = isMobile ? 150 : 160;
+  const cardH = isMobile ? 170 : 190;
 
   // 🔥 More rope curve on mobile
   const ROPE_PATH = isMobile
