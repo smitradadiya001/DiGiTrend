@@ -58,7 +58,7 @@ const Hero = () => {
   );
 
   return (
-    <div id="hero" className="relative w-full min-h-screen flex items-center justify-center  overflow-x-hidden px- sm:px-3 text-center">
+    <div id="hero" className="relative w-full min-h-[70vh] md:min-h-screen  flex items-center justify-center  overflow-x-hidden px- sm:px-3 text-center">
 
       <AnimatePresence mode="wait">
 

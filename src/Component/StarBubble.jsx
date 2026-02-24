@@ -20,7 +20,7 @@ const StarburstBubble = ({ text = "Services", className = " text-black", size = 
         height={size}
         className="absolute inset-0 drop-shadow-lg "
       >
-        <path d={pathData} className="fill-yellow-100" />
+        <path d={pathData} className="fill-yellow-100 opacity-0.8" />
 
       </svg>
       <span className="relative z-10 font-bold text-starburst-foreground text-xl select-none">

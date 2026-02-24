@@ -129,12 +129,12 @@ export default function Footer() {
     <footer className="relative w-full flex flex-col overflow-hidden min-h-screen rounded-t-4xl bg-amber-100 font-oswald">
 
       {/* TOP SECTION */}
-      <div className="flex justify-between items-start px-20 pt-14 pb-8 flex-wrap gap-10">
+      <div className="flex justify-between items-start px-4 pt-14 pb-8 flex-wrap gap-10">
 
         {/* LEFT */}
-        <div className="flex flex-col gap-6 font-bold text-m">
+        <div className="flex flex-col gap-6 font-bold text-m ml-[13%] md:ml-[0%]">
 
-          <div>
+          <div >
             <p className="uppercase text-3xl font-bold tracking-wide text-[#b8750a]">
               Phone
             </p>
@@ -172,7 +172,7 @@ export default function Footer() {
         </div>
 
         {/* RIGHT */}
-        <div className="flex gap-20">
+        <div className="flex gap-8">
 
           <div className="flex flex-col">
             {navLinks.map((l) => (

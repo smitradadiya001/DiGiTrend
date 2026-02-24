@@ -27,7 +27,7 @@ const faqs = [
 
 const FAQItem = ({ question, answer, isOpen, onClick }) => {
   return (
-    <div className="w-175 ml-30">
+    <div className="w-90 ml-0 md:w-130 md:ml-20 lg:w-170 lg:ml-30">
       {/* QUESTION */}
       <motion.button
         onClick={onClick}
@@ -121,7 +121,7 @@ export default function FAQSection({ id }) {
           </div>
         </div>
 
-        <div className="w-full max-w-4xl space-y-6">
+        <div className="w-full max-w-4xl space-y-6 ">
           {faqs.map((faq, index) => (
             <FAQItem
               key={index}

@@ -10,8 +10,8 @@ export default function Client({ id }) {
         </h1>
 
         {/* Transparent Yellow Sticker */}
-        <div className="absolute top-[-30px] right-[10%] md:top-0 md:right-[20%] lg:right-[30%] rotate-[-15deg] z-10 pointer-events-none">
-          <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 opacity-90">
+        <div className="absolute top-0 right-14% md:top-0 md:right-[40%] lg:right-[38%] lg:top-19 rotate-[-15deg] z-10 pointer-events-none">
+          <div className="w-24 h-24 sm:w-20 sm:h-20 md:w-28 md:h-28 opacity-90">
             <svg viewBox="0 0 200 200" className="w-full h-full">
               <polygon
                 points="

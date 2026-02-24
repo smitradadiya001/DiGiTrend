@@ -104,13 +104,13 @@ const ServicesComponent = ({ id }) => {
           <div className="relative text-center">
 
             {/* First Line */}
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-[100px] 
+            <h1 className="text-6xl sm:text-9xl md:text-7xl lg:text-[100px] 
                        font-extrabold leading-[0.9] tracking-tight text-black">
               What we&apos;re
             </h1>
 
             {/* Second Line */}
-            <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-[100px] 
+            <h2 className="text-6xl sm:text-5xl md:text-7xl lg:text-[100px] 
                        font-extrabold leading-[0.9] tracking-tight text-black">
               absolutely killer at
             </h2>
@@ -124,7 +124,7 @@ const ServicesComponent = ({ id }) => {
                         -translate-y-1/2 
                         rotate-[-12deg] ">
 
-              <div className="relative w-12 h-14 md:w-16 md:h-16 ">
+              <div className="relative w-12 h-14 md:w-16 md:h-16 left-34 bottom-18 md:top-9">
                 <StarburstBubble />
               </div>
             </div>
