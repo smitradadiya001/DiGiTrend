@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const navLinks = [
-  { name: "Home", href: "#" },
-  { name: "Services", href: "#" },
-  { name: "Benefits", href: "#" },
-  { name: "Portfolio", href: "#" },
-  { name: "Reviews", href: "#" },
+  { name: "Home", href: "#home" },
+  { name: "Services", href: "#services" },
+  { name: "Benefits", href: "#benefits" },
+  { name: "Portfolio", href: "#work" },
+  { name: "Reviews", href: "#review" },
   { name: "About", href: "#" },
   { name: "Privacy", href: "#" },
   { name: "Terms", href: "#" },
@@ -21,12 +21,21 @@ const socialLinks = [
 ];
 
 const NavLink = ({ href, children }) => {
+  const handleClick = (e) => {
+    if (href.startsWith("#") && href.length > 1) {
+      e.preventDefault();
+      const id = href.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
   return (
-   
     <Link
       to={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      onClick={handleClick}
       className="group relative inline-block overflow-hidden font-oswald text-4xl font-bold tracking-wide"
     >
       {/* Default Text */}
@@ -54,10 +63,8 @@ const NavLink = ({ href, children }) => {
       >
         {children}
       </span>
-      </Link>
-      
-      );
-   
+    </Link>
+  );
 };
 
 
@@ -138,7 +145,7 @@ export default function Footer() {
             <p className="uppercase text-3xl font-bold tracking-wide text-[#b8750a]">
               Phone
             </p>
-            <ContactLink  href="#">+91 9987726922</ContactLink>
+            <ContactLink href="#">+91 9987726922</ContactLink>
           </div>
 
           <div>
@@ -195,13 +202,13 @@ export default function Footer() {
 
       {/* BIG TEXT */}
       <div
-  ref={wrapRef}
-  className="flex-1 flex items-center justify-center overflow-hidden w-full px-7 "
->
-  <span
-    ref={textRef}
-    style={{ fontSize: `${fontSize}px` }}
-    className="
+        ref={wrapRef}
+        className="flex-1 flex items-center justify-center overflow-hidden w-full px-7 "
+      >
+        <span
+          ref={textRef}
+          style={{ fontSize: `${fontSize}px` }}
+          className="
       uppercase
       font-bold
       leading-[0.83]
@@ -216,10 +223,10 @@ export default function Footer() {
       text-transparent
       text-center
     "
-  >
-    DiGi Trend
-  </span>
-</div>
+        >
+          DiGi Trend
+        </span>
+      </div>
 
 
       {/* BOTTOM BAR */}

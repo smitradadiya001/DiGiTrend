@@ -36,7 +36,7 @@ export default function Third() {
   };
 
   return (
-    <div className="relative min-h-300px w-full bg-white flex items-center justify-center overflow-hidden font-sans">
+    <div id="benefits" className="relative min-h-300px w-full bg-white flex items-center justify-center overflow-hidden font-sans">
       {/* Background */}
       <div className="absolute inset-0 opacity-30" style={dotPattern} />
 
@@ -46,7 +46,7 @@ export default function Third() {
       <motion.div
         animate={{ y: [0, -30, 0], rotate: [0, 5, 0] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        style={{    
+        style={{
           clipPath:
             "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
         }}
