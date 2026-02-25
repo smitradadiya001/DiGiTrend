@@ -1,6 +1,5 @@
-import { useRef, useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// ─── Brand data ─────────────────────────────────────────────
 const BRANDS = [
   { id: "inkspire", label: "Inkspire\nTattoo", emoji: "🌹", textColor: "black" },
   { id: "ancestral", label: "Ancestral\nHouse", emoji: "🏠", textColor: "#5c3d11" },
@@ -13,36 +12,62 @@ const BRANDS = [
   { id: "nova", label: "Nova\nWorks", emoji: "🚀", textColor: "#f97316" },
 ];
 
-const SPEED = 1;        // Snake speed
-const AMPLITUDE = 60;   // Wave height
-const WAVELENGTH = 600; // Wave density
+const SPEED = 1;
+
+function getResponsiveDims(width) {
+  if (width < 480) {
+    return {
+      cardW: 92,
+      cardH: 56,
+      amplitude: 26,
+      wavelength: 340,
+      stepX: 98,
+    };
+  }
+
+  if (width < 640) {
+    return {
+      cardW: 106,
+      cardH: 62,
+      amplitude: 32,
+      wavelength: 400,
+      stepX: 114,
+    };
+  }
+
+  if (width < 1024) {
+    return {
+      cardW: 140,
+      cardH: 80,
+      amplitude: 45,
+      wavelength: 520,
+      stepX: 148,
+    };
+  }
+
+  return {
+    cardW: 160,
+    cardH: 90,
+    amplitude: 60,
+    wavelength: 600,
+    stepX: 168,
+  };
+}
 
 export default function SpiralBrands({ id }) {
   const containerRef = useRef(null);
   const offsetRef = useRef(0);
   const rafRef = useRef(null);
 
-  const [dims, setDims] = useState({
-    cardW: 160,
-    cardH: 90,
+  const [dims, setDims] = useState(() => {
+    const base = getResponsiveDims(window.innerWidth);
+    return { ...base, containerH: base.cardH + base.amplitude * 2 + 24 };
   });
 
-  // ─── Responsive sizing ────────────────────────────────────
   useEffect(() => {
     const update = () => {
-      const w = window.innerWidth;
-      let cardW = 160;
-      let cardH = 90;
-
-      if (w < 640) {
-        cardW = 110;
-        cardH = 65;
-      } else if (w < 1024) {
-        cardW = 140;
-        cardH = 80;
-      }
-
-      setDims({ cardW, cardH });
+      const base = getResponsiveDims(window.innerWidth);
+      setDims({ ...base, containerH: base.cardH + base.amplitude * 2 + 24 });
     };
 
     update();
@@ -50,44 +75,38 @@ export default function SpiralBrands({ id }) {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // ─── Perfect Infinite Animation ───────────────────────────
   useEffect(() => {
-    const totalItems = BRANDS.length * 3; // 🔥 3 sets
-    const totalW = totalItems * dims.cardW;
-    const centerY = (dims.cardH * 3) / 2;
+    const totalItems = BRANDS.length * 3;
+    const totalW = totalItems * dims.stepX;
+    const centerY = dims.containerH / 2;
 
-    function tick() {
+    const tick = () => {
       offsetRef.current += SPEED;
 
       const el = containerRef.current;
-      if (!el) return;
+      if (!el) {
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
 
       const items = el.querySelectorAll(".sarpakar-item");
-
       items.forEach((node) => {
-        const index = parseFloat(node.dataset.index);
+        const index = Number(node.dataset.index ?? 0);
+        let x = index * dims.stepX - offsetRef.current;
 
-        let x = index * dims.cardW - offsetRef.current;
+        while (x < -dims.stepX) x += totalW;
+        while (x >= totalW - dims.stepX) x -= totalW;
 
-        // 🔥 Perfect seamless wrap
-        while (x < -dims.cardW) x += totalW;
-        while (x >= totalW - dims.cardW) x -= totalW;
-
-        const rad = (x / WAVELENGTH) * Math.PI * 2;
-        const y = centerY + Math.sin(rad) * AMPLITUDE;
-
-        const slope =
-          (Math.cos(rad) * AMPLITUDE * (Math.PI * 2)) /
-          WAVELENGTH;
+        const rad = (x / dims.wavelength) * Math.PI * 2;
+        const y = centerY + Math.sin(rad) * dims.amplitude;
+        const slope = (Math.cos(rad) * dims.amplitude * (Math.PI * 2)) / dims.wavelength;
         const angle = Math.atan(slope) * (180 / Math.PI);
 
-        node.style.transform = `translate(${x}px, ${
-          y - dims.cardH / 2
-        }px) rotate(${angle}deg)`;
+        node.style.transform = `translate3d(${x}px, ${y - dims.cardH / 2}px, 0) rotate(${angle}deg)`;
       });
 
       rafRef.current = requestAnimationFrame(tick);
-    }
+    };
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
@@ -96,10 +115,9 @@ export default function SpiralBrands({ id }) {
   return (
     <div
       id={id}
-      className="w-full relative overflow-hidden py-16 select-none"
+      className="relative w-full overflow-hidden py-16 select-none"
       style={{ backgroundColor: "white" }}
     >
-      {/* Background Pattern */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.5]"
         style={{
@@ -112,32 +130,21 @@ export default function SpiralBrands({ id }) {
         }}
       />
 
-      <div className="text-center mb-10 relative z-10 px-4">
+      <div className="relative z-10 mb-10 px-4 text-center">
         <p className="text-[24px] md:text-[30px] tracking-[0.4em] uppercase text-gray-400 mb-2">
           Trusted Partners
         </p>
       </div>
 
-      <div
-        ref={containerRef}
-        className="relative w-full"
-        style={{ height: dims.cardH * 3 }}
-      >
-        {/* 🔥 3 Sets Rendered */}
+      <div ref={containerRef} className="relative w-full" style={{ height: dims.containerH }}>
         {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, i) => (
-          <BrandCard
-            key={`${brand.id}-${i}`}
-            brand={brand}
-            index={i}
-            dims={dims}
-          />
+          <BrandCard key={`${brand.id}-${i}`} brand={brand} index={i} dims={dims} />
         ))}
       </div>
     </div>
   );
 }
 
-// ─── Brand Card ─────────────────────────────────────────────
 function BrandCard({ brand, index, dims }) {
   return (
     <div
@@ -151,12 +158,10 @@ function BrandCard({ brand, index, dims }) {
         willChange: "transform",
       }}
     >
-      <div className="flex items-center gap-2">
-        {brand.emoji && (
-          <span className="text-xl md:text-2xl">{brand.emoji}</span>
-        )}
+      <div className="flex items-center gap-1.5 px-2">
+        {brand.emoji && <span className="text-sm md:text-2xl">{brand.emoji}</span>}
         <span
-          className="text-[9px] md:text-[11px] font-bold uppercase tracking-widest leading-none"
+          className="whitespace-pre-line text-center text-[8px] md:text-[11px] font-bold uppercase tracking-[0.16em] leading-[1.1]"
           style={{ color: brand.textColor }}
         >
           {brand.label}

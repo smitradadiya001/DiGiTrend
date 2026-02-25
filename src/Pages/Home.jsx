@@ -3,7 +3,6 @@ import React from 'react'
 import Hero from '../Component/Hero'
 
 import Third from '../Component/Third'
-import { Bubbles } from 'lucide-react'
 import FeatureCards from '../Component/Feature'
 import SpiralBrands from '../Component/Spiral'
 import CurvedImageScroll from '../Component/Graphics'
@@ -21,23 +20,22 @@ import Contact from '../Component/Contact'
 function Home() {
   return (
     <>
-      <Hero />
-      <div className="flex  items-center justify-center">
-
-      </div>
-      <Third />
-      <section>
-        <FeatureCards id="features" />
-      </section>
-      <SpiralBrands id="partners" />
-      <CurvedImageScroll id="design" />
-      <ServicesComponent id="services" />
-      <OurWork id="work" />
-      <ReviewSection id="review" />
-      <Contact id="contact" />
-      <Client id ="client_talk"/>
-      <FAQSection id="faqs" />
-      <Footer />
+      <Hero id="hero" />
+      <main className="flex flex-col gap-8 sm:gap-10 md:gap-0">
+        <Third />
+        <section>
+          <FeatureCards id="features" />
+        </section>
+        <SpiralBrands id="partners" />
+        <CurvedImageScroll id="design" />
+        <ServicesComponent id="services" />
+        <OurWork id="work" />
+        <ReviewSection id="review" />
+        <Contact id="contact" />
+        <Client id="client_talk" />
+        <FAQSection id="faqs" />
+        <Footer />
+      </main>
 
 
     </>

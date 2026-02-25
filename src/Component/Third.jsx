@@ -31,7 +31,7 @@ export default function Third() {
 
   const dotPattern = {
     backgroundImage:
-      "radial-gradient(circle, rgba(0,0,0,1) 0.5px, transparent 0.5px)",
+      "radial-gradient(circle, rgba(0,0,0,1) 0.5px, transparent 0.75px)",
     backgroundSize: "15px 15px",
   };
 

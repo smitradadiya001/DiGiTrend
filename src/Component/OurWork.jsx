@@ -59,8 +59,8 @@ export default function OurWork({ id }) {
     damping: 50,
   });
 
-  const rotateY = useTransform(smooth, [0, 1], [0, -280]);
-  const yMove = useTransform(smooth, [0, 1], [0, -180]);
+  const rotateY = useTransform(smooth, [0, 1], [0, -360]);
+  const yMove = useTransform(smooth, [0, 1], [0, -380]);
 
   return (
     <div
@@ -91,7 +91,7 @@ export default function OurWork({ id }) {
                 (PROJECTS.length - 1) * 80;
 
               const vertical =
-                index * 80 - totalHeight / 2;
+                index * 120 - totalHeight / 2;
 
               return (
                 <div

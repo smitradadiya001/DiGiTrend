@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Facebook, Twitter, Instagram } from "lucide-react";
 
 const Contact = ({ id }) => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,35 +22,93 @@ const Contact = ({ id }) => {
     console.log("Form submitted:", formData);
   };
 
+  const framePathDesktop = `M 0,45
+    L 0,100
+    C 0,110 5,120 15,120
+    C 30,120 30,140 15,145
+    C 5,148 0,155 0,165
+    L 0,300
+    C 0,310 5,320 15,320
+    C 30,320 30,340 15,345
+    C 5,348 0,355 0,365
+    L 0,505
+    C 0,530 20,550 45,550
+    L 300,550
+    C 310,550 320,545 320,535
+    C 320,520 340,520 345,535
+    C 348,545 355,550 365,550
+    L 600,550
+    C 610,550 620,545 620,535
+    C 620,520 640,520 645,535
+    C 648,545 655,550 665,550
+    L 805,550
+    C 830,550 850,530 850,505
+    L 850,445
+    C 850,435 845,425 835,425
+    C 820,425 820,405 835,400
+    C 845,397 850,390 850,380
+    L 850,200
+    C 850,190 845,180 835,180
+    C 820,180 820,160 835,155
+    C 845,152 850,145 850,135
+    L 850,45
+    C 850,20 830,0 805,0
+    L 550,0
+    C 540,0 530,5 530,15
+    C 530,30 510,30 505,15
+    C 502,5 495,0 485,0
+    L 250,0
+    C 240,0 230,5 230,15
+    C 230,30 210,30 205,15
+    C 202,5 195,0 185,0
+    L 45,0
+    C 20,0 0,20 0,45
+    Z`;
+
+  const framePathMobile = `M 0,35
+    C 0,15 15,0 35,0
+    L 170,0
+    C 180,0 188,6 190,15
+    C 194,28 210,28 214,15
+    C 216,6 224,0 234,0
+    L 365,0
+    C 385,0 400,15 400,35
+    L 400,250
+    C 400,259 395,267 387,269
+    C 376,273 376,287 387,291
+    C 395,293 400,301 400,310
+    L 400,500
+    C 400,509 395,517 387,519
+    C 376,523 376,537 387,541
+    C 395,543 400,551 400,560
+    L 400,710
+    C 400,730 385,745 365,745
+    L 255,745
+    C 245,745 238,739 236,730
+    C 232,717 216,717 212,730
+    C 210,739 203,745 193,745
+    L 35,745
+    C 15,745 0,730 0,710
+    L 0,560
+    C 0,551 5,543 13,541
+    C 24,537 24,523 13,519
+    C 5,517 0,509 0,500
+    L 0,310
+    C 0,301 5,293 13,291
+    C 24,287 24,273 13,269
+    C 5,267 0,259 0,250
+    L 0,35
+    Z`;
+
+  const framePath = isMobile ? framePathMobile : framePathDesktop;
+  const frameViewBox = isMobile ? "-4 -4 408 753" : "-4 -4 858 558";
+
   return (
-    <div id={id} className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-12"
+    <div id={id} className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-12  "
       style={{ background: "var(--gradient-bg)" }}
     >
       {/* Floating decorative dots */}
-      <motion.div
-        className="absolute top-20 right-20 w-2 h-2 rounded-full bg-primary-foreground/40"
-        animate={{ y: [0, -10, 0], opacity: [0.4, 1, 0.4] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute bottom-32 left-16 w-1.5 h-1.5 rounded-full bg-primary-foreground/30"
-        animate={{ y: [0, 8, 0], opacity: [0.3, 0.8, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity, delay: 1 }}
-      />
-      <motion.div
-        className="absolute top-1/3 right-1/4 text-primary-foreground/20 text-lg font-bold"
-        animate={{ rotate: [0, 90, 0] }}
-        transition={{ duration: 8, repeat: Infinity }}
-      >
-        +
-      </motion.div>
-      <motion.div
-        className="absolute bottom-1/4 right-1/3 text-primary-foreground/15 text-sm font-bold"
-        animate={{ rotate: [0, -90, 0] }}
-        transition={{ duration: 6, repeat: Infinity, delay: 2 }}
-      >
-        ×
-      </motion.div>
+      
 
       {/* Card with wavy/blob shape */}
       <motion.div
@@ -53,62 +119,24 @@ const Contact = ({ id }) => {
       >
         {/* SVG blob background for the card */}
         <svg
-          className="absolute inset-0 w-full h-full"
-          viewBox="0 0 850 550"
+          className="absolute inset-0 w-full h-full "
+          viewBox={frameViewBox}
           preserveAspectRatio="none"
           style={{ filter: "drop-shadow(1px 30px 30px rgba(0,0,0,0.05))" }}
         >
           <motion.path
-            d="M 40,0 
-               C 20,0 0,20 0,45 
-               L 0,100 
-               C 0,110 5,120 15,120 
-               C 30,120 30,140 15,145 
-               C 5,148 0,155 0,165 
-               L 0,300 
-               C 0,310 5,320 15,320 
-               C 30,320 30,340 15,345 
-               C 5,348 0,355 0,365 
-               L 0,505 
-               C 0,530 20,550 45,550 
-               L 300,550 
-               C 310,550 320,545 320,535 
-               C 320,520 340,520 345,535 
-               C 348,545 355,550 365,550 
-               L 600,550 
-               C 610,550 620,545 620,535 
-               C 620,520 640,520 645,535 
-               C 648,545 655,550 665,550 
-               L 805,550 
-               C 830,550 850,530 850,505 
-               L 850,445 
-               C 850,435 845,425 835,425 
-               C 820,425 820,405 835,400 
-               C 845,397 850,390 850,380 
-               L 850,200 
-               C 850,190 845,180 835,180 
-               C 820,180 820,160 835,155 
-               C 845,152 850,145 850,135 
-               L 850,45 
-               C 850,20 830,0 805,0 
-               L 550,0 
-               C 540,0 530,5 530,15 
-               C 530,30 510,30 505,15 
-               C 502,5 495,0 485,0 
-               L 250,0 
-               C 240,0 230,5 230,15 
-               C 230,30 210,30 205,15 
-               C 202,5 195,0 185,0 
-               Z"
+            d={framePath}
             fill="white"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
+            stroke="#1d4ed8"
+            strokeWidth={isMobile ? "2.4" : "2"}
+            vectorEffect="non-scaling-stroke"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
 
         {/* Card content */}
-        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 p-6 sm:p-10 md:p-14 min-h-[500px]">
+        <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-10 p-6 sm:p-10 md:p-14 min-h-[760px] md:min-h-[550px]">
           {/* Left - Form */}
           <div>
             <motion.h1

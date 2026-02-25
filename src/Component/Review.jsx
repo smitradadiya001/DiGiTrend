@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const reviews = [
   { gradient: "grad1", label: "Animals" },
@@ -7,7 +7,6 @@ const reviews = [
   { gradient: "grad4", label: "Entertainment" },
   { gradient: "grad5", label: "Space" },
   { gradient: "grad6", label: "Tech" },
- 
 ];
 
 export default function HangingImages({ id }) {
@@ -20,30 +19,25 @@ export default function HangingImages({ id }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // 🔥 Smaller cards on mobile
   const cardW = isMobile ? 150 : 160;
   const cardH = isMobile ? 170 : 190;
 
-  // 🔥 More rope curve on mobile
   const ROPE_PATH = isMobile
-    ? "M 0,80 Q 250,180 500,180 Q 750,180 1000,80"
-    : "M 0,60 Q 250,140 500,140 Q 750,140 1000,60";
+    ? "M -120,80 Q 250,180 500,180 Q 750,180 1120,80"
+    : "M -120,60 Q 250,140 500,140 Q 750,140 1120,60";
 
   const stringLen = isMobile ? 30 : 25;
-
-  // 🔥 More spacing in animation
-  const animationDuration = isMobile ? 25 : 18;
-  const delayGap = isMobile ? 4 : 3;
+  const animationDuration = isMobile ? 10 : 18;
+  
+  const delayGap = animationDuration / reviews.length;
 
   return (
-    <section id={id} >
+    <section id={id} className="py-8 sm:py-10 md:py-0">
       <div className="text-center mb-5 px-4">
         <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-800">
           What Our Customers Say
         </h2>
-        <p className="text-gray-500 mt-3">
-          Trusted by businesses worldwide
-        </p>
+        <p className="text-gray-500 mt-3">Trusted by businesses worldwide</p>
       </div>
 
       <div className="w-full overflow-hidden">
@@ -54,21 +48,13 @@ export default function HangingImages({ id }) {
         >
           <defs>
             {reviews.map((rev, i) => (
-              <linearGradient
-                key={i}
-                id={rev.gradient}
-                x1="0%"
-                y1="0%"
-                x2="100%"
-                y2="100%"
-              >
+              <linearGradient key={i} id={rev.gradient} x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#a18cd1" />
                 <stop offset="100%" stopColor="#fbc2eb" />
               </linearGradient>
             ))}
           </defs>
 
-          {/* Rope */}
           <path
             id="ropePath"
             d={ROPE_PATH}
@@ -81,29 +67,13 @@ export default function HangingImages({ id }) {
           {reviews.map((rev, i) => (
             <g key={i}>
               <g>
-                {/* String */}
-                <line
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2={stringLen}
-                  stroke="#8B6914"
-                  strokeWidth="2"
-                />
+                <line x1="0" y1="0" x2="0" y2={stringLen} stroke="#8B6914" strokeWidth="2" />
 
-                {/* Pin */}
                 <circle cx="0" cy="0" r="6" fill="#22a553" />
                 <circle cx="0" cy="0" r="2.5" fill="#fff" />
 
-                {/* Card */}
                 <g transform={`translate(${-cardW / 2}, ${stringLen})`}>
-                  <rect
-                    width={cardW}
-                    height={cardH}
-                    rx="14"
-                    fill="white"
-                    stroke="#ddd"
-                  />
+                  <rect width={cardW} height={cardH} rx="14" fill="white" stroke="#ddd" />
 
                   <rect
                     x="8"
@@ -127,14 +97,13 @@ export default function HangingImages({ id }) {
                   </text>
                 </g>
 
-                {/* 🔥 Better animation spacing */}
                 <animateMotion
                   dur={`${animationDuration}s`}
                   repeatCount="indefinite"
                   rotate="auto"
-                  begin={`${i * delayGap}s`}
+                  begin={`${-((i + 1) * delayGap)}s`}
                 >
-                  <mpath href="#ropePath" />
+                  <mpath href="#ropePath" xlinkHref="#ropePath" />
                 </animateMotion>
               </g>
             </g>
