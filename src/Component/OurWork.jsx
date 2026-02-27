@@ -123,15 +123,15 @@ export default function OurWork({ id }) {
       const visibleHeight =
         Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
       const visibilityRatio = visibleHeight / window.innerHeight;
-      const inView = visibilityRatio > 0.55;
+      const inView = visibilityRatio > 0.8;
       if (!inView) return;
 
       const current = rotationRaw.get();
       const step = event.deltaY * -0.35;
-      const next = clamp(current + step, -540, 0);
+      const next = clamp(current + step, -360, 0);
 
       const canRotate =
-        (event.deltaY > 0 && current > -540) ||
+        (event.deltaY > 0 && current > -360) ||
         (event.deltaY < 0 && current < 0);
 
       if (canRotate) {
@@ -149,7 +149,7 @@ export default function OurWork({ id }) {
         0,
         1
       );
-      rotationRaw.set(-progress * 540);
+      rotationRaw.set(-progress * 360);
     };
 
     onScroll();

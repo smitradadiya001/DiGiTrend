@@ -36,7 +36,7 @@ const NavLink = ({ href, children }) => {
     <Link
       to={href}
       onClick={handleClick}
-      className="group relative inline-block overflow-hidden font-oswald text-3xl font-bold tracking-wide mr-10"
+      className="group relative inline-block overflow-hidden font-oswald text-2xl sm:text-3xl font-bold tracking-wide mr-0 md:mr-10 leading-tight"
     >
       {/* Default Text */}
       <span className="block text-[#1a1a1a] transition-colors duration-300 group-hover:text-transparent text-[#b8750a]">
@@ -133,13 +133,13 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="relative w-full flex flex-col overflow-hidden min-h-screen rounded-t-4xl bg-amber-100 font-oswald">
+    <footer className="relative w-full flex flex-col min-h-screen rounded-t-4xl bg-amber-100 font-oswald">
 
       {/* TOP SECTION */}
-      <div className="flex justify-between items-start px-4 pt-14 pb-8 flex-wrap gap-10">
+      <div className="flex flex-col md:flex-row justify-between items-center md:items-start px-4 sm:px-6 md:px-8 pt-14 pb-8 gap-10">
 
         {/* LEFT */}
-        <div className="flex flex-col gap-6 font-bold text-m ml-[13%] md:ml-[0%]">
+        <div className="w-full md:w-auto flex flex-col items-center md:items-start text-center md:text-left gap-6 font-bold text-m ml-0">
 
           <div >
             <p className="uppercase text-3xl font-bold tracking-wide text-[#b8750a]">
@@ -179,9 +179,9 @@ export default function Footer() {
         </div>
 
         {/* RIGHT */}
-        <div className="flex gap-8">
+        <div className="w-full md:w-auto flex justify-between sm:justify-start gap-6 md:gap-5">
 
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0">
             {navLinks.map((l) => (
               <NavLink key={l.name} href={l.href}>
                 {l.name}
@@ -189,7 +189,7 @@ export default function Footer() {
             ))}
           </div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col min-w-0">
             {socialLinks.map((l) => (
               <NavLink key={l.name} href={l.href}>
                 {l.name}
@@ -203,7 +203,7 @@ export default function Footer() {
       {/* BIG TEXT */}
       <div
         ref={wrapRef}
-        className="flex-1 flex items-center justify-center mb-7 w-full px-7  "
+        className="flex-1 flex items-end justify-center mb-2 md:mb-7 w-full px-4 md:px-7"
       >
         <span
           ref={textRef}
@@ -238,8 +238,8 @@ export default function Footer() {
         items-center
         flex-wrap
         gap-2
-        px-20
-        py-3
+        px-4 sm:px-8 md:px-20
+        py-2 md:py-3
         border-t
         border-[#b8750a]/20
         bg-[#b8750a]/5

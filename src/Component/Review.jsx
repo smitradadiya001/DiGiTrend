@@ -43,8 +43,8 @@ export default function HangingImages({ id }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const cardW = isMobile ? 190 : 180;
-  const cardH = isMobile ? 180 : 180;
+  const cardW = isMobile ? 200 : 180;
+  const cardH = isMobile ? 200 : 180;
 
   const ROPE_PATH = isMobile
     ? "M -120,80 Q 250,180 500,180 Q 750,180 1120,80"
@@ -106,7 +106,7 @@ export default function HangingImages({ id }) {
                     width={cardW - 20}
                     height={cardH - 50}
                     rx="10"
-                    fill={`url(#${rev.gradient})`}
+                    fill="#FFFFCF"
                     opacity="0.9"
                   />
 
@@ -116,7 +116,7 @@ export default function HangingImages({ id }) {
                     y="30"
                     textAnchor="middle"
                     fontSize="16"
-                    fill="#FFD700"
+                    fill="#FFBF00"
                   >
                     ★★★★★
                   </text>
