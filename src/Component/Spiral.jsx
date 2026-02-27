@@ -13,6 +13,8 @@ const BRANDS = [
 ];
 
 const SPEED = 1;
+const MAX_X_STRETCH = 1.35;
+const MAX_Y_STRETCH = 1.9;
 
 function getResponsiveDims(width) {
   if (width < 480) {
@@ -56,18 +58,17 @@ function getResponsiveDims(width) {
 
 export default function SpiralBrands({ id }) {
   const containerRef = useRef(null);
+  const trackRef = useRef(null);
   const offsetRef = useRef(0);
   const rafRef = useRef(null);
+  const stretchRef = useRef({ x: 1, y: 1 });
+  const zoomRef = useRef(1.18);
 
-  const [dims, setDims] = useState(() => {
-    const base = getResponsiveDims(window.innerWidth);
-    return { ...base, containerH: base.cardH + base.amplitude * 2 + 24 };
-  });
+  const [dims, setDims] = useState(() => getResponsiveDims(window.innerWidth));
 
   useEffect(() => {
     const update = () => {
-      const base = getResponsiveDims(window.innerWidth);
-      setDims({ ...base, containerH: base.cardH + base.amplitude * 2 + 24 });
+      setDims(getResponsiveDims(window.innerWidth));
     };
 
     update();
@@ -76,9 +77,36 @@ export default function SpiralBrands({ id }) {
   }, []);
 
   useEffect(() => {
+    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+    const onScroll = () => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const rect = el.getBoundingClientRect();
+      const progress = clamp(
+        (window.innerHeight - rect.top) / (window.innerHeight + rect.height),
+        0,
+        1
+      );
+
+      stretchRef.current = {
+        x: 1 + progress * (MAX_X_STRETCH - 1),
+        y: 1 + progress * (MAX_Y_STRETCH - 1),
+      };
+      zoomRef.current = 1.18 - progress * 0.24;
+    };
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
     const totalItems = BRANDS.length * 3;
     const totalW = totalItems * dims.stepX;
-    const centerY = dims.containerH / 2;
+    const containerH = dims.cardH + dims.amplitude * 2 * MAX_Y_STRETCH + 24;
+    const centerY = containerH / 2;
 
     const tick = () => {
       offsetRef.current += SPEED;
@@ -97,13 +125,18 @@ export default function SpiralBrands({ id }) {
         while (x < -dims.stepX) x += totalW;
         while (x >= totalW - dims.stepX) x -= totalW;
 
-        const rad = (x / dims.wavelength) * Math.PI * 2;
-        const y = centerY + Math.sin(rad) * dims.amplitude;
-        const slope = (Math.cos(rad) * dims.amplitude * (Math.PI * 2)) / dims.wavelength;
+        const wave = dims.wavelength * stretchRef.current.x;
+        const amp = dims.amplitude * stretchRef.current.y;
+        const rad = (x / wave) * Math.PI * 2;
+        const y = centerY + Math.sin(rad) * amp;
+        const slope = (Math.cos(rad) * amp * (Math.PI * 2)) / wave;
         const angle = Math.atan(slope) * (180 / Math.PI);
 
         node.style.transform = `translate3d(${x}px, ${y - dims.cardH / 2}px, 0) rotate(${angle}deg)`;
       });
+      if (trackRef.current) {
+        trackRef.current.style.transform = `scale(${zoomRef.current})`;
+      }
 
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -136,10 +169,20 @@ export default function SpiralBrands({ id }) {
         </p>
       </div>
 
-      <div ref={containerRef} className="relative w-full" style={{ height: dims.containerH }}>
-        {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, i) => (
-          <BrandCard key={`${brand.id}-${i}`} brand={brand} index={i} dims={dims} />
-        ))}
+      <div
+        ref={containerRef}
+        className="relative w-full"
+        style={{ height: dims.cardH + dims.amplitude * 2 * MAX_Y_STRETCH + 24 }}
+      >
+        <div
+          ref={trackRef}
+          className="absolute inset-0 will-change-transform"
+          style={{ transformOrigin: "center center" }}
+        >
+          {[...BRANDS, ...BRANDS, ...BRANDS].map((brand, i) => (
+            <BrandCard key={`${brand.id}-${i}`} brand={brand} index={i} dims={dims} />
+          ))}
+        </div>
       </div>
     </div>
   );

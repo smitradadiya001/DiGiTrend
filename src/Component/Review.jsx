@@ -1,12 +1,36 @@
 import { useEffect, useState } from "react";
 
 const reviews = [
-  { gradient: "grad1", label: "Animals" },
-  { gradient: "grad2", label: "Geography" },
-  { gradient: "grad3", label: "History" },
-  { gradient: "grad4", label: "Entertainment" },
-  { gradient: "grad5", label: "Space" },
-  { gradient: "grad6", label: "Tech" },
+  {
+    gradient: "grad1",
+    name: "@Olivia",
+    text: "Absolutely amazing experience. The team delivered beyond expectations!",
+  },
+  {
+    gradient: "grad2",
+    name: "@Liam",
+    text: "Professional service and great communication throughout the project.",
+  },
+  {
+    gradient: "grad3",
+    name: "@Sophia",
+    text: "Highly satisfied with the results. Would definitely recommend!",
+  },
+  {
+    gradient: "grad4",
+    name: "@Noah",
+    text: "Outstanding quality and fast delivery. Truly impressive work.",
+  },
+  {
+    gradient: "grad5",
+    name: "@Emma",
+    text: "Fantastic support and attention to detail. Loved working with them!",
+  },
+  {
+    gradient: "grad6",
+    name: "@James",
+    text: "Top-notch service with excellent creativity and execution.",
+  },
 ];
 
 export default function HangingImages({ id }) {
@@ -19,25 +43,26 @@ export default function HangingImages({ id }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const cardW = isMobile ? 150 : 160;
-  const cardH = isMobile ? 170 : 190;
+  const cardW = isMobile ? 190 : 180;
+  const cardH = isMobile ? 180 : 180;
 
   const ROPE_PATH = isMobile
     ? "M -120,80 Q 250,180 500,180 Q 750,180 1120,80"
     : "M -120,60 Q 250,140 500,140 Q 750,140 1120,60";
 
-  const stringLen = isMobile ? 30 : 25;
+  const stringLen = isMobile ? 40 : 25;
   const animationDuration = isMobile ? 10 : 18;
-  
   const delayGap = animationDuration / reviews.length;
 
   return (
-    <section id={id} className="py-8 sm:py-10 md:py-0">
-      <div className="text-center mb-5 px-4">
+    <section id={id} className="py-8 sm:py-10 md:py-0 mt-29">
+      <div className="text-center mb-[-5] px-4">
         <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-800">
           What Our Customers Say
         </h2>
-        <p className="text-gray-500 mt-3">Trusted by businesses worldwide</p>
+        <p className="text-gray-500 mt-3">
+          Trusted by businesses worldwide
+        </p>
       </div>
 
       <div className="w-full overflow-hidden">
@@ -73,27 +98,60 @@ export default function HangingImages({ id }) {
                 <circle cx="0" cy="0" r="2.5" fill="#fff" />
 
                 <g transform={`translate(${-cardW / 2}, ${stringLen})`}>
-                  <rect width={cardW} height={cardH} rx="14" fill="white" stroke="#ddd" />
+                  <rect width={cardW} height={cardH} rx="16" fill="white" stroke="#ddd" />
 
                   <rect
-                    x="8"
-                    y="8"
-                    width={cardW - 16}
-                    height={cardH - 45}
-                    rx="8"
+                    x="10"
+                    y="10"
+                    width={cardW - 20}
+                    height={cardH - 50}
+                    rx="10"
                     fill={`url(#${rev.gradient})`}
-                    opacity="0.8"
+                    opacity="0.9"
                   />
 
+                  {/* ⭐⭐⭐⭐⭐ Stars */}
                   <text
                     x={cardW / 2}
-                    y={cardH - 12}
+                    y="30"
                     textAnchor="middle"
-                    fontSize="12"
+                    fontSize="16"
+                    fill="#FFD700"
+                  >
+                    ★★★★★
+                  </text>
+
+                  {/* Review Text */}
+                  <foreignObject
+                    x="15"
+                    y="45"
+                    width={cardW - 30}
+                    height={cardH - 110}
+                  >
+                    <div
+                     
+                      style={{
+                        fontSize: isMobile ? "13px" : "13px",
+                        fontWeight: "600",
+                        color: "#222",
+                        textAlign: "center",
+                        lineHeight: "1.3",
+                      }}
+                    >
+                      {rev.text}
+                    </div>
+                  </foreignObject>
+
+                  {/* Client Name */}
+                  <text
+                    x={cardW / 2}
+                    y={cardH - 18}
+                    textAnchor="middle"
+                    fontSize="13"
                     fontWeight="bold"
                     fill="#222"
                   >
-                    {rev.label}
+                    {rev.name}
                   </text>
                 </g>
 
@@ -103,7 +161,7 @@ export default function HangingImages({ id }) {
                   rotate="auto"
                   begin={`${-((i + 1) * delayGap)}s`}
                 >
-                  <mpath href="#ropePath" xlinkHref="#ropePath" />
+                  <mpath href="#ropePath" />
                 </animateMotion>
               </g>
             </g>

@@ -2,22 +2,22 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom"
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "Services", href: "#services" },
-  { name: "Benefits", href: "#benefits" },
-  { name: "Portfolio", href: "#work" },
-  { name: "Reviews", href: "#review" },
-  { name: "About", href: "#" },
-  { name: "Privacy", href: "#" },
-  { name: "Terms", href: "#" },
+  { name: "HOME", href: "#home" },
+  { name: "SERVICES", href: "#services" },
+  { name: "BENIFITS", href: "#benefits" },
+  { name: "PORTFOLIO", href: "#work" },
+  { name: "REVIEWS", href: "#review" },
+  { name: "ABOUT", href: "#" },
+  { name: "PRIVACY", href: "#" },
+  { name: "TERMS", href: "#" },
 ];
 
 const socialLinks = [
-  { name: "Linkedin", href: "#" },
-  { name: "Facebook", href: "#" },
-  { name: "Instagram", href: "#" },
-  { name: "Behance", href: "#" },
-  { name: "Google", href: "#" },
+  { name: "LINKDIN", href: "#" },
+  { name: "FACEBOOK", href: "#" },
+  { name: "INSTAGRAM", href: "#" },
+  { name: "BEHANCE", href: "#" },
+  { name: "GOOGLE", href: "#" },
 ];
 
 const NavLink = ({ href, children }) => {
@@ -36,10 +36,10 @@ const NavLink = ({ href, children }) => {
     <Link
       to={href}
       onClick={handleClick}
-      className="group relative inline-block overflow-hidden font-oswald text-4xl font-bold tracking-wide"
+      className="group relative inline-block overflow-hidden font-oswald text-3xl font-bold tracking-wide mr-10"
     >
       {/* Default Text */}
-      <span className="block text-[#1a1a1a] transition-colors duration-300 group-hover:text-transparent">
+      <span className="block text-[#1a1a1a] transition-colors duration-300 group-hover:text-transparent text-[#b8750a]">
         {children}
       </span>
 
@@ -203,7 +203,7 @@ export default function Footer() {
       {/* BIG TEXT */}
       <div
         ref={wrapRef}
-        className="flex-1 flex items-center justify-center overflow-hidden w-full px-7 "
+        className="flex-1 flex items-center justify-center mb-7 w-full px-7  "
       >
         <span
           ref={textRef}
@@ -213,6 +213,8 @@ export default function Footer() {
       font-bold
       leading-[0.83]
       tracking-[-2px]
+      scale-y-[1.3]
+      scale-x-[0.9]
       whitespace-nowrap
       select-none
       bg-gradient-to-b
@@ -224,7 +226,7 @@ export default function Footer() {
       text-center
     "
         >
-          DiGi Trend
+          DiGi-Trend
         </span>
       </div>
 
