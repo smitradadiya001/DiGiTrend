@@ -55,6 +55,7 @@ function getLayout(width) {
       cardSize: card,
       radius: card * 1.7,
       perspective: 900,
+      isMobile: true,
     };
   }
 
@@ -64,6 +65,7 @@ function getLayout(width) {
       cardSize: card,
       radius: card * 1.7,
       perspective: 1200,
+      isMobile: false,
     };
   }
 
@@ -72,6 +74,7 @@ function getLayout(width) {
     cardSize: card,
     radius: card * 1.7,
     perspective: 1400,
+    isMobile: false,
   };
 }
 
@@ -98,7 +101,10 @@ export default function OurWork({ id }) {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // ✅ DESKTOP WHEEL (UNCHANGED)
   useEffect(() => {
+    if (layout.isMobile) return;
+
     const section = sectionRef.current;
     if (!section) return;
 
@@ -124,7 +130,7 @@ export default function OurWork({ id }) {
         (e.deltaY < 0 && current < 0);
 
       if (canRotate) {
-        e.preventDefault(); // 🔥 LOCK SCROLL
+        e.preventDefault();
         rotationRaw.set(next);
       }
     };
@@ -134,7 +140,34 @@ export default function OurWork({ id }) {
     return () => {
       window.removeEventListener("wheel", onWheel);
     };
-  }, [rotationRaw]);
+  }, [layout.isMobile, rotationRaw]);
+
+  // ✅ NEW: MOBILE TOUCH ROTATION (ONLY ADDED PART)
+  useEffect(() => {
+    if (!layout.isMobile) return;
+
+    let startX = 0;
+
+    const handleTouchStart = (e) => {
+      startX = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+      const currentX = e.touches[0].clientX;
+      const delta = currentX - startX;
+      startX = currentX;
+
+      rotationRaw.set(rotationRaw.get() + delta * 0.6);
+    };
+
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [layout.isMobile, rotationRaw]);
 
   return (
     <>
@@ -169,6 +202,8 @@ export default function OurWork({ id }) {
                   className="absolute top-1/2 left-1/2"
                   style={{
                     transform: `translate(-50%, -50%) rotateY(${angle}deg) translateZ(${layout.radius}px)`,
+                    transformStyle: "preserve-3d",
+                    backfaceVisibility: "hidden",
                   }}
                 >
                   <div
@@ -183,15 +218,6 @@ export default function OurWork({ id }) {
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
-
-                    <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition duration-300 flex flex-col items-center justify-center text-white text-center p-4">
-                      <p className="text-xs font-bold tracking-widest uppercase">
-                        {project.category}
-                      </p>
-                      <h3 className="text-lg md:text-2xl font-bold mt-2">
-                        {project.title}
-                      </h3>
-                    </div>
                   </div>
                 </div>
               );
