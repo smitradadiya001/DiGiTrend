@@ -43,19 +43,20 @@ export default function HangingImages({ id }) {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const cardW = isMobile ? 200 : 180;
-  const cardH = isMobile ? 200 : 180;
+  const cardW = isMobile ? 260 : 180;
+  const cardH = isMobile ? 250 : 180;
+  const activeReviews = isMobile ? reviews.slice(0, 4) : reviews;
 
   const ROPE_PATH = isMobile
-    ? "M -120,80 Q 250,180 500,180 Q 750,180 1120,80"
+    ? "M -120,90 Q 250,200 500,200 Q 750,200 1120,90"
     : "M -120,60 Q 250,140 500,140 Q 750,140 1120,60";
 
-  const stringLen = isMobile ? 40 : 25;
+  const stringLen = isMobile ? 55 : 25;
   const animationDuration = isMobile ? 10 : 18;
-  const delayGap = animationDuration / reviews.length;
+  const delayGap = animationDuration / activeReviews.length;
 
   return (
-    <section id={id} className="py-8 sm:py-10 md:py-0 mt-29">
+    <section id={id} className="py-8 sm:py-10 md:py-0 md:mt-29">
       <div className="text-center mb-[-5] px-4">
         <h2 className="text-3xl sm:text-5xl md:text-7xl font-bold text-gray-800">
           What Our Customers Say
@@ -67,12 +68,12 @@ export default function HangingImages({ id }) {
 
       <div className="w-full overflow-hidden">
         <svg
-          viewBox={isMobile ? "0 0 1000 520" : "0 0 1000 460"}
+          viewBox={isMobile ? "0 0 1000 620" : "0 0 1000 460"}
           preserveAspectRatio="xMidYMid meet"
           className="w-full h-auto"
         >
           <defs>
-            {reviews.map((rev, i) => (
+            {activeReviews.map((rev, i) => (
               <linearGradient key={i} id={rev.gradient} x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#a18cd1" />
                 <stop offset="100%" stopColor="#fbc2eb" />
@@ -89,7 +90,7 @@ export default function HangingImages({ id }) {
             strokeLinecap="round"
           />
 
-          {reviews.map((rev, i) => (
+          {activeReviews.map((rev, i) => (
             <g key={i}>
               <g>
                 <line x1="0" y1="0" x2="0" y2={stringLen} stroke="#8B6914" strokeWidth="2" />
@@ -115,7 +116,7 @@ export default function HangingImages({ id }) {
                     x={cardW / 2}
                     y="30"
                     textAnchor="middle"
-                    fontSize="16"
+                    fontSize={isMobile ? "20" : "16"}
                     fill="#FFBF00"
                   >
                     ★★★★★
@@ -131,11 +132,11 @@ export default function HangingImages({ id }) {
                     <div
                      
                       style={{
-                        fontSize: isMobile ? "13px" : "13px",
+                        fontSize: isMobile ? "20px" : "13px",
                         fontWeight: "600",
                         color: "#222",
                         textAlign: "center",
-                        lineHeight: "1.3",
+                        lineHeight: isMobile ? "1.4" : "1.3",
                       }}
                     >
                       {rev.text}
@@ -147,7 +148,7 @@ export default function HangingImages({ id }) {
                     x={cardW / 2}
                     y={cardH - 18}
                     textAnchor="middle"
-                    fontSize="13"
+                    fontSize={isMobile ? "15" : "13"}
                     fontWeight="bold"
                     fill="#222"
                   >

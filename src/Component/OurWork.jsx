@@ -49,135 +49,115 @@ const PROJECTS = [
 ];
 
 function getLayout(width) {
-  if (width < 480) {
+  if (width < 640) {
+    const card = 200;
     return {
-      isMobile: true,
-      cardW: 140,
-      cardH: 140,
-      radius: 195,
-      perspective: 850,
-      sectionHeight: "68vh",
-    };
-  }
-
-  if (width < 768) {
-    return {
-      isMobile: true,
-      cardW: 160,
-      cardH: 160,
-      radius: 230,
-      perspective: 950,
-      sectionHeight: "72vh",
+      cardSize: card,
+      radius: card * 1.7,
+      perspective: 900,
     };
   }
 
   if (width < 1024) {
+    const card = 200;
     return {
-      isMobile: false,
-      cardW: 190,
-      cardH: 190,
-      radius: 320,
+      cardSize: card,
+      radius: card * 1.7,
       perspective: 1200,
-      sectionHeight: "78vh",
     };
   }
 
+  const card = 240;
   return {
-    isMobile: false,
-    cardW: 240,
-    cardH: 240,
-    radius: 400,
+    cardSize: card,
+    radius: card * 1.7,
     perspective: 1400,
-    sectionHeight: "80vh",
   };
 }
 
 export default function OurWork({ id }) {
   const sectionRef = useRef(null);
   const rotationRaw = useMotionValue(0);
-  const MotionDiv = motion.div;
-  const [layout, setLayout] = useState(() => getLayout(window.innerWidth));
-
   const rotateY = useSpring(rotationRaw, {
-    stiffness: 65,
-    damping: 24,
+    stiffness: 70,
+    damping: 20,
   });
 
+  const [layout, setLayout] = useState(() =>
+    typeof window !== "undefined"
+      ? getLayout(window.innerWidth)
+      : getLayout(1200)
+  );
+
   useEffect(() => {
-    const onResize = () => setLayout(getLayout(window.innerWidth));
-    onResize();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    const handleResize = () => {
+      setLayout(getLayout(window.innerWidth));
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
-    const onWheel = (event) => {
-      if (layout.isMobile) return;
-
+    const onWheel = (e) => {
       const rect = section.getBoundingClientRect();
+
       const visibleHeight =
-        Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+        Math.min(rect.bottom, window.innerHeight) -
+        Math.max(rect.top, 0);
+
       const visibilityRatio = visibleHeight / window.innerHeight;
-      const inView = visibilityRatio > 0.8;
+      const inView = visibilityRatio >= 0.8;
+
       if (!inView) return;
 
       const current = rotationRaw.get();
-      const step = event.deltaY * -0.35;
-      const next = clamp(current + step, -360, 0);
+      const next = clamp(current - e.deltaY * 0.4, -360, 0);
 
       const canRotate =
-        (event.deltaY > 0 && current > -360) ||
-        (event.deltaY < 0 && current < 0);
+        (e.deltaY > 0 && current > -360) ||
+        (e.deltaY < 0 && current < 0);
 
       if (canRotate) {
-        event.preventDefault();
+        e.preventDefault(); // 🔥 LOCK SCROLL
         rotationRaw.set(next);
       }
     };
 
-    const onScroll = () => {
-      if (!layout.isMobile) return;
-
-      const rect = section.getBoundingClientRect();
-      const progress = clamp(
-        (window.innerHeight - rect.top) / (window.innerHeight + rect.height),
-        0,
-        1
-      );
-      rotationRaw.set(-progress * 360);
-    };
-
-    onScroll();
     window.addEventListener("wheel", onWheel, { passive: false });
-    window.addEventListener("scroll", onScroll, { passive: true });
+
     return () => {
       window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("scroll", onScroll);
     };
-  }, [layout.isMobile, rotationRaw]);
+  }, [rotationRaw]);
 
   return (
     <>
-      <h1 className="text-4xl sm:text-5xl md:text-7xl font-semibold text-gray-900 text-center px-4">
+      <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold text-center mt-10">
         Our Work
       </h1>
+
       <section
         ref={sectionRef}
         id={id}
-        className="relative bg-white overflow-hidden"
-        style={{ height: layout.sectionHeight }}
+        className="relative bg-white overflow-hidden flex items-center justify-center"
+        style={{ height: "100vh" }}
       >
         <div
-          className="relative w-full h-full flex items-center justify-center px-2 md:px-4"
+          className="relative w-full h-full flex items-center justify-center"
           style={{ perspective: `${layout.perspective}px` }}
         >
-          <MotionDiv
-            style={{ rotateY, transformStyle: "preserve-3d" }}
+          <motion.div
+            style={{
+              rotateY,
+              transformStyle: "preserve-3d",
+              willChange: "transform",
+            }}
             className="relative w-0 h-0"
           >
             {PROJECTS.map((project, index) => {
@@ -192,19 +172,23 @@ export default function OurWork({ id }) {
                   }}
                 >
                   <div
-                    className="relative overflow-hidden bg-white rounded-2xl md:rounded-3xl shadow-xl border border-black/10"
-                    style={{ width: layout.cardW, height: layout.cardH }}
+                    className="relative overflow-hidden bg-white rounded-3xl shadow-xl border border-black/10"
+                    style={{
+                      width: layout.cardSize,
+                      height: layout.cardSize,
+                    }}
                   >
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 bg-black/25 hover:bg-black/45 transition duration-300 flex flex-col items-center justify-center text-white text-center p-3 md:p-6">
-                      <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase">
+
+                    <div className="absolute inset-0 bg-black/30 hover:bg-black/50 transition duration-300 flex flex-col items-center justify-center text-white text-center p-4">
+                      <p className="text-xs font-bold tracking-widest uppercase">
                         {project.category}
                       </p>
-                      <h3 className="text-base sm:text-lg md:text-2xl font-bold mt-1 md:mt-2">
+                      <h3 className="text-lg md:text-2xl font-bold mt-2">
                         {project.title}
                       </h3>
                     </div>
@@ -212,7 +196,7 @@ export default function OurWork({ id }) {
                 </div>
               );
             })}
-          </MotionDiv>
+          </motion.div>
         </div>
       </section>
     </>
