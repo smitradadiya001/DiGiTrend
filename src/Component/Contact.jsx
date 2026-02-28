@@ -5,6 +5,8 @@ import { MapPin, Phone, Mail, Facebook, Twitter, Instagram } from "lucide-react"
 const Contact = ({ id }) => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [isMobile, setIsMobile] = useState(false);
+  const [status, setStatus] = useState({ type: null, message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -17,9 +19,54 @@ const Contact = ({ id }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
+    if (!formData.email || !formData.message) {
+      setStatus({
+        type: "error",
+        message: "Please enter your email and message.",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus({ type: null, message: "" });
+
+    try {
+      const baseUrl =
+        import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
+      const res = await fetch(`${baseUrl}/api/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.success) {
+        throw new Error(
+          data.error || "Something went wrong. Please try again."
+        );
+      }
+
+      setStatus({
+        type: "success",
+        message: "Thank you! We have received your message.",
+      });
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message:
+          error.message || "Failed to send your message. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const framePathDesktop = `M 0,45
@@ -207,16 +254,26 @@ const Contact = ({ id }) => {
 
               <motion.button
                 type="submit"
-                className="px-8 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors shadow-lg  "
+                className="px-8 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium  transition-colors shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{ boxShadow: "0 8px 25px hsl(246 65% 58% / 0.4)" }}
-                whileHover={{ scale: 1.5 }}
-                whileTap={{ scale: 0.97 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
+                disabled={isSubmitting}
               >
-                Send Message
+                {isSubmitting ? "Sending..." : "Send Message"}
               </motion.button>
+              {status.message && (
+                <p
+                  className={`text-xs mt-2 ${
+                    status.type === "success" ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {status.message}
+                </p>
+              )}
             </form>
           </div>
 
