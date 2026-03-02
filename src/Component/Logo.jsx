@@ -65,7 +65,7 @@ export default function Logo() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative flex items-center font-caveat text-6xl md:text-8xl select-none"
+        className="relative flex items-center text-6xl md:text-8xl select-none"
       >
         {/* Magic Part */}
         <div className="flex">
@@ -73,7 +73,7 @@ export default function Logo() {
             <motion.span
               key={`magic-${index}`}
               variants={letterVariants}
-              className="text-black-200 font-magic drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
+              className="text-black-200 drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]"
             >
               {char}
             </motion.span>
@@ -86,7 +86,7 @@ export default function Logo() {
             <motion.span
               key={`teal-${index}`}
               variants={letterVariants}
-              className="text-blue-900 font-magic drop-shadow-[0_0_15px_rgba(0,242,234,0.5)]"
+              className="text-blue-900 drop-shadow-[0_0_15px_rgba(0,242,234,0.5)]"
             >
               {char}
             </motion.span>

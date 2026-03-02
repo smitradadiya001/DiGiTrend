@@ -178,7 +178,7 @@ const Contact = ({ id }) => {
           <motion.path
             d={framePath}
             fill="white"
-            stroke="#1d4ed8"
+            stroke="#F6C700"
             strokeWidth={isMobile ? "2.4" : "2"}
             vectorEffect="non-scaling-stroke"
             strokeLinecap="round"
@@ -220,7 +220,7 @@ const Contact = ({ id }) => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Name"
-                  className="w-full border-input bg-gray-100 rounded-2xl py-2 px-4 text-sm text-card-foreground outline-none focus:border-primary transition-colors placeholder:text-muted-foreground/50"
+                  className="w-full border border-amber-100 bg-gray-100 rounded-2xl py-2 px-4 text-sm text-card-foreground outline-none focus:border-amber-300 transition-colors placeholder:text-muted-foreground/50"
                 />
               </motion.div>
 
@@ -236,7 +236,7 @@ const Contact = ({ id }) => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="E-mail"
-                  className="w-full border-input bg-gray-100 py-2 px-4 text-sm text-card-foreground outline-none focus:border-primary transition-colors rounded-2xl placeholder:text-muted-foreground/50"
+                  className="w-full border border-amber-100 bg-gray-100 py-2 px-4 text-sm text-card-foreground outline-none focus:border-amber-300 transition-colors rounded-2xl placeholder:text-muted-foreground/50"
                 />
               </motion.div>
 
@@ -252,7 +252,7 @@ const Contact = ({ id }) => {
                   onChange={handleChange}
                   rows={3}
                   placeholder="Type something if you want..."
-                  className="w-full rounded-2xl bg-gray-100 p-4 text-sm text-card-foreground outline-none focus:border-primary transition-colors resize-none placeholder:text-muted-foreground/50"
+                  className="w-full rounded-2xl border border-amber-100 bg-gray-100 p-4 text-sm text-card-foreground outline-none focus:border-amber-300 transition-colors resize-none placeholder:text-muted-foreground/50"
                 />
               </motion.div>
 
