@@ -41,7 +41,7 @@ export default function OurWork() {
       <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center ">
         Our Work
       </h2>
-      <p className="text-gray-500 ">
+      <p className="text-gray-500 mt-4 ">
       Real projects. Real impact. Designed to elevate brands in the digital world. 
         </p>
 
