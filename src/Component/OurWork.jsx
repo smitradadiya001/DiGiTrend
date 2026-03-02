@@ -1,230 +1,134 @@
-"use client";
+'use client'
 
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import React, { useEffect, useRef, useState } from 'react'
+import { motion, useAnimation, useInView } from 'framer-motion'
 
-const PROJECTS = [
-  {
-    id: 1,
-    title: "BlackBox",
-    category: "WORDPRESS",
-    image:
-      "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: 2,
-    title: "RxGStudios",
-    category: "FRAMER",
-    image:
-      "https://images.unsplash.com/photo-1542744094-24638eff58bb?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: 3,
-    title: "MyPlayful",
-    category: "SHOPIFY",
-    image:
-      "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: 4,
-    title: "HoonNaturals",
-    category: "WORDPRESS",
-    image:
-      "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: 5,
-    title: "Probize",
-    category: "UI/UX",
-    image:
-      "https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?q=80&w=1000&auto=format&fit=crop",
-  },
-  {
-    id: 6,
-    title: "HoonNaturals",
-    category: "WORDPRESS",
-    image:
-      "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?q=80&w=1000&auto=format&fit=crop",
-  },
-];
+const images = [
+  "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1509319117193-57bab727e09d?w=400&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=600&fit=crop",
+  //"https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=600&fit=crop",
+]
 
-function getLayout(width) {
-  if (width < 640) {
-    const card = 200;
-    return {
-      cardSize: card,
-      radius: card * 1.7,
-      perspective: 900,
-      isMobile: true,
-    };
+export default function OurWork() {
+  const controls = useAnimation()
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, amount: 0.3 })
+
+  const [screenWidth, setScreenWidth] = useState(1200)
+
+  useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth)
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
+  const sequence = async () => {
+    await controls.start("enter")
+    await new Promise(res => setTimeout(res, 300))
+    await controls.start("spread")
   }
 
-  if (width < 1024) {
-    const card = 200;
-    return {
-      cardSize: card,
-      radius: card * 1.7,
-      perspective: 1200,
-      isMobile: false,
-    };
-  }
-
-  const card = 240;
-  return {
-    cardSize: card,
-    radius: card * 1.7,
-    perspective: 1400,
-    isMobile: false,
-  };
-}
-
-export default function OurWork({ id }) {
-  const sectionRef = useRef(null);
-  const rotationRaw = useMotionValue(0);
-  const rotateY = useSpring(rotationRaw, {
-    stiffness: 70,
-    damping: 20,
-  });
-
-  const [layout, setLayout] = useState(() =>
-    typeof window !== "undefined"
-      ? getLayout(window.innerWidth)
-      : getLayout(1200)
-  );
-
   useEffect(() => {
-    const handleResize = () => {
-      setLayout(getLayout(window.innerWidth));
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // ✅ DESKTOP WHEEL (UNCHANGED)
-  useEffect(() => {
-    if (layout.isMobile) return;
-
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-
-    const onWheel = (e) => {
-      const rect = section.getBoundingClientRect();
-
-      const visibleHeight =
-        Math.min(rect.bottom, window.innerHeight) -
-        Math.max(rect.top, 0);
-
-      const visibilityRatio = visibleHeight / window.innerHeight;
-      const inView = visibilityRatio >= 0.8;
-
-      if (!inView) return;
-
-      const current = rotationRaw.get();
-      const next = clamp(current - e.deltaY * 0.4, -360, 0);
-
-      const canRotate =
-        (e.deltaY > 0 && current > -360) ||
-        (e.deltaY < 0 && current < 0);
-
-      if (canRotate) {
-        e.preventDefault();
-        rotationRaw.set(next);
-      }
-    };
-
-    window.addEventListener("wheel", onWheel, { passive: false });
-
-    return () => {
-      window.removeEventListener("wheel", onWheel);
-    };
-  }, [layout.isMobile, rotationRaw]);
-
-  // ✅ NEW: MOBILE TOUCH ROTATION (ONLY ADDED PART)
-  useEffect(() => {
-    if (!layout.isMobile) return;
-
-    let startX = 0;
-
-    const handleTouchStart = (e) => {
-      startX = e.touches[0].clientX;
-    };
-
-    const handleTouchMove = (e) => {
-      const currentX = e.touches[0].clientX;
-      const delta = currentX - startX;
-      startX = currentX;
-
-      rotationRaw.set(rotationRaw.get() + delta * 0.6);
-    };
-
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchmove", handleTouchMove);
-
-    return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [layout.isMobile, rotationRaw]);
+    if (isInView) sequence()
+  }, [isInView])
 
   return (
     <>
-      <h1 className="text-4xl sm:text-6xl md:text-7xl font-semibold text-center mt-10">
+      <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-center ">
         Our Work
-      </h1>
+      </h2>
+      <p className="text-gray-500 ">
+      Real projects. Real impact. Designed to elevate brands in the digital world. 
+        </p>
 
       <section
-        ref={sectionRef}
-        id={id}
-        className="relative bg-white overflow-hidden flex items-center justify-center"
-        style={{ height: "100vh" }}
+        ref={ref}
+        className="relative min-h-[40vh] sm:min-h-[60vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden"
       >
-        <div
-          className="relative w-full h-full flex items-center justify-center"
-          style={{ perspective: `${layout.perspective}px` }}
-        >
-          <motion.div
-            style={{
-              rotateY,
-              transformStyle: "preserve-3d",
-              willChange: "transform",
-            }}
-            className="relative w-0 h-0"
-          >
-            {PROJECTS.map((project, index) => {
-              const angle = (360 / PROJECTS.length) * index;
+        <div className="relative flex items-center justify-center w-full">
 
-              return (
-                <div
-                  key={project.id}
-                  className="absolute top-1/2 left-1/2"
-                  style={{
-                    transform: `translate(-50%, -50%) rotateY(${angle}deg) translateZ(${layout.radius}px)`,
-                    transformStyle: "preserve-3d",
-                    backfaceVisibility: "hidden",
-                  }}
-                >
-                  <div
-                    className="relative overflow-hidden bg-white rounded-3xl shadow-xl border border-black/10"
-                    style={{
-                      width: layout.cardSize,
-                      height: layout.cardSize,
-                    }}
-                  >
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </motion.div>
+          {images.map((src, index) => {
+
+            const center = (images.length - 1) / 2
+            const offset = index - center
+
+            // 🔥 Responsive Spread Based On Screen Width
+            let spreadMultiplier
+
+            if (screenWidth < 640) {
+              spreadMultiplier = 85   // mobile
+            } else if (screenWidth < 1024) {
+              spreadMultiplier = 160  // tablet
+            } else {
+              spreadMultiplier = 220  // laptop / desktop
+            }
+
+            const spreadX = offset * spreadMultiplier
+            const spreadY = (offset * offset) * (spreadMultiplier / 40)
+            const spreadRotate = offset * 6
+
+            return (
+              <motion.div
+                key={index}
+                initial={{
+                  y: "120vh",
+                  rotate: -40,
+                  opacity: 0,
+                  scale: 0.95
+                }}
+                animate={controls}
+                variants={{
+                  enter: {
+                    y: 0,
+                    rotate: 0,
+                    opacity: 1,
+                    scale: 1,
+                    transition: {
+                      duration: 1.4,
+                      ease: [0.25, 1, 0.5, 1],
+                    },
+                  },
+                  spread: {
+                    x: spreadX,
+                    y: spreadY,
+                    rotate: spreadRotate,
+                    transition: {
+                      duration: 1.3,
+                      ease: [0.25, 1, 0.5, 1],
+                    },
+                  },
+                }}
+                className="
+                  absolute
+                  w-24
+                  sm:w-36
+                  md:w-56
+                  lg:w-64
+                  aspect-[4/3]
+                  rounded-xl
+                  overflow-hidden
+                  
+                "
+                style={{
+                  zIndex: images.length - index,
+                  transformOrigin: "bottom center",
+                }}
+              >
+                <img
+                  src={src}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            )
+          })}
+
         </div>
       </section>
     </>
-  );
+  )
 }
