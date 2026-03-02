@@ -1,269 +1,100 @@
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom"
+import React from "react";
 
-const navLinks = [
-  { name: "HOME", href: "#home" },
-  { name: "SERVICES", href: "#services" },
-  { name: "BENIFITS", href: "#benefits" },
-  { name: "PORTFOLIO", href: "#work" },
-  { name: "REVIEWS", href: "#review" },
-  { name: "ABOUT", href: "#" },
-  { name: "PRIVACY", href: "#" },
-  { name: "TERMS", href: "#" },
-];
-
-const socialLinks = [
-  { name: "LINKDIN", href: "#" },
-  { name: "FACEBOOK", href: "#" },
-  { name: "INSTAGRAM", href: "#" },
-  { name: "BEHANCE", href: "#" },
-  { name: "GOOGLE", href: "#" },
-];
-
-const NavLink = ({ href, children }) => {
-  const handleClick = (e) => {
-    if (href.startsWith("#") && href.length > 1) {
-      e.preventDefault();
-      const id = href.substring(1);
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  };
-
+const FooterCta = () => {
   return (
-    <Link
-      to={href}
-      onClick={handleClick}
-      className="group relative inline-block overflow-hidden font-oswald text-2xl sm:text-3xl font-bold tracking-wide mr-0 md:mr-10 leading-tight"
-    >
-      {/* Default Text */}
-      <span className="block text-[#1a1a1a] transition-colors duration-300 group-hover:text-transparent text-[#b8750a]">
-        {children}
-      </span>
+    <footer className="relative overflow-hidden bg-amber-100 text-black">
+      {/* Big circle background */}
+      <div className="pointer-events-none absolute -top-0 left-1/2 -translate-x-1/2 h-[480px] w-[480px] rounded-full bg-amber-200/80 z-[-1]"   />
 
-      {/* Gold Gradient Hover Text */}
-      <span
-        className="
-          absolute
-          inset-0
-          block
-          translate-x-[-100%]
-          group-hover:translate-x-0
-          transition-transform
-          duration-500
-          bg-gradient-to-r
-          from-[#f5b030]
-          via-[#b8700a]
-          to-[#4d2d02]
-          bg-clip-text
-          text-transparent
-        "
-      >
-        {children}
-      </span>
-    </Link>
-  );
-};
-
-
-const ContactLink = ({ href, children }) => {
-  return (
-    <Link
-      to={href}
-      className="group relative inline-block overflow-hidden font-oswald text-sm"
-    >
-      <span className="block text-[#222] transition-colors duration-300 group-hover:text-transparent">
-        {children}
-      </span>
-
-      <span
-        className="
-          absolute
-          inset-0
-          block
-          translate-x-[-100%]
-          group-hover:translate-x-0
-          transition-transform
-          duration-500
-          bg-gradient-to-r
-          from-[#f5b030]
-          via-[#b8700a]
-          to-[#4d2d02]
-          bg-clip-text
-          text-transparent
-        "
-      >
-        {children}
-      </span>
-    </Link>
-  );
-};
-
-
-export default function Footer() {
-  const textRef = useRef(null);
-  const wrapRef = useRef(null);
-  const [fontSize, setFontSize] = useState(200);
-
-  useEffect(() => {
-    const fit = () => {
-      if (!textRef.current || !wrapRef.current) return;
-      const maxW = wrapRef.current.offsetWidth;
-      let lo = 50,
-        hi = 900,
-        best = 50;
-
-      while (lo <= hi) {
-        const mid = Math.floor((lo + hi) / 2);
-        textRef.current.style.fontSize = mid + "px";
-        if (textRef.current.scrollWidth <= maxW) {
-          best = mid;
-          lo = mid + 1;
-        } else hi = mid - 1;
-      }
-
-      setFontSize(best);
-    };
-
-    document.fonts.ready.then(fit);
-    window.addEventListener("resize", fit);
-    return () => window.removeEventListener("resize", fit);
-  }, []);
-
-  return (
-    <footer className="relative w-full flex flex-col min-h-screen rounded-t-4xl bg-amber-100 font-oswald">
-
-      {/* TOP SECTION */}
-      <div className="flex flex-col md:flex-row justify-between items-center md:items-start px-4 sm:px-6 md:px-8 pt-14 pb-8 gap-10">
-
-        {/* LEFT */}
-        <div className="w-full md:w-auto flex flex-col items-center md:items-start text-center md:text-left gap-6 font-bold text-m ml-0">
-
-          <div >
-            <p className="uppercase text-3xl font-bold tracking-wide text-[#b8750a]">
-              Phone
-            </p>
-            <ContactLink href="#">+91 9987726922</ContactLink>
+      {/* Top row: left contact, center CTA text+button, right locations */}
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-4 py-14 md:flex-row md:items-start md:justify-between md:py-20">
+        {/* Left: contact */}
+        <div className="space-y-3 text-sm md:text-base">
+          <p className="font-semibold uppercase tracking-[0.2em]">Contact</p>
+          <div className="space-y-1">
+            <a
+              href="mailto:hello@digitrend.com"
+              className="block text-base md:text-lg font-semibold underline decoration-black/30 underline-offset-4 hover:decoration-black"
+            >
+              hello@digitrend.com
+            </a>
+            <a
+              href="tel:+910000000000"
+              className="block text-sm md:text-base font-medium hover:text-black/70"
+            >
+              +91 00000 00000
+            </a>
           </div>
-
-          <div>
-            <p className="uppercase text-3xl font-bold tracking-wide text-[#b8750a]">
-              Email
-            </p>
-            <ContactLink href="#">hello@digitrend.in</ContactLink>
-          </div>
-
-          <div>
-            <p className="uppercase text-3xl font-bold tracking-wide text-[#b8750a]">
-              Address
-            </p>
-            <p className="text-m leading-loose text-[#222]">
-              Deep Darshan Apartment,<br />
-              Office No - 205 Karanjade,<br />
-              Panvel - 410206
-            </p>
-          </div>
-
-          <div>
-            <p className="uppercase text-3xl font-bold tracking-wide text-[#b8750a]">
-              Opening Hours
-            </p>
-            <p className="text-m leading-loose text-[#222]">
-              Mon to Fri: 9.00am - 9.00pm<br />
-              Sat & Sun: Closed
-            </p>
-          </div>
-
         </div>
 
-        {/* RIGHT */}
-        <div className="w-full md:w-auto flex justify-between sm:justify-start gap-6 md:gap-5">
+        {/* Center: big sentence + button */}
+        <div className="flex flex-col items-center gap-5 text-center">
+          <p className="text-lg md:text-2xl font-semibold">
+            Got a project? Want to collaborate?
+          </p>
+          <button className="rounded-full bg-amber-900 px-7 py-3 text-sm md:text-base font-semibold text-amber-50 shadow-[0_12px_30px_rgba(0,0,0,0.25)] transition hover:bg-amber-800">
+            Discuss your project
+          </button>
+        </div>
 
-          <div className="flex flex-col min-w-0">
-            {navLinks.map((l) => (
-              <NavLink key={l.name} href={l.href}>
-                {l.name}
-              </NavLink>
-            ))}
+        {/* Right: locations */}
+        <div className="flex flex-col gap-6 text-right text-xs md:text-sm">
+          <div className="space-y-1">
+            <p className="font-semibold uppercase tracking-[0.2em]">
+              Indonesia
+            </p>
+            <p className="leading-relaxed">
+              Jln. Bambu No. 375
+              <br />
+              Samarinda, Kalimantan Timur
+            </p>
           </div>
-
-          <div className="flex flex-col min-w-0">
-            {socialLinks.map((l) => (
-              <NavLink key={l.name} href={l.href}>
-                {l.name}
-              </NavLink>
-            ))}
+          <div className="space-y-1">
+            <p className="font-semibold uppercase tracking-[0.2em]">
+              Hong Kong
+            </p>
+            <p className="leading-relaxed">
+              60 Ya Fung Sung
+              <br />
+              San Tsuen, 75129
+            </p>
           </div>
-
         </div>
       </div>
 
-      {/* BIG TEXT */}
-      <div
-        ref={wrapRef}
-        className="flex-1 flex items-end justify-center mb-2 md:mb-7 w-full px-4 md:px-7"
-      >
-        <span
-          ref={textRef}
-          style={{ fontSize: `${fontSize}px` }}
-          className="
-      uppercase
-      font-bold
-      leading-[0.83]
-      tracking-[-2px]
-      scale-y-[1.2]
-      scale-x-[0.9]
-      whitespace-nowrap
-      select-none
-      bg-gradient-to-b
-      from-[#f5b030]
-      via-[#b8700a]
-      to-[#432701]
-      bg-clip-text
-      text-transparent
-      text-center
-    "
-        >
-          DiGi-Trend
-        </span>
+      {/* Thin divider row with copyright + terms + socials */}
+      <div className="relative  px-4 pb-4 pt-3">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 text-[11px] md:flex-row md:text-xs">
+          <p>© {new Date().getFullYear()} DigiTrend Studio. All rights reserved.</p>
+
+          <button className="underline decoration-black/30 underline-offset-4 hover:decoration-black">
+            Terms &amp; Conditions
+          </button>
+
+          <div className="flex items-center gap-3 font-semibold">
+            <a href="#" className="hover:text-black/70">
+              Bē
+            </a>
+            <a href="#" className="hover:text-black/70">
+              Instagram
+            </a>
+            <a href="#" className="hover:text-black/70">
+              LinkedIn
+            </a>
+          </div>
+        </div>
       </div>
 
-
-      {/* BOTTOM BAR */}
-      <div className="
-        flex
-        justify-between
-        items-center
-        flex-wrap
-        gap-2
-        px-4 sm:px-8 md:px-20
-        py-2 md:py-3
-        border-t
-        border-[#b8750a]/20
-        bg-[#b8750a]/5
-      ">
-        <p className="text-xs text-gray-500">
-          © 2026. DiGi Trend.in. All Rights Reserved
-        </p>
-
-        <p className="text-xs text-gray-500">
-          Developed by{" "}
-          <span className="
-            font-bold
-            tracking-widest
-            text-sm
-            bg-gradient-to-r
-            from-[#e8a020]
-            to-[#b8700a]
-            bg-clip-text
-            text-transparent
-          ">
-            DiGi Trend
-          </span>
-        </p>
+      {/* Huge “LET’S WORK TOGETHER” bar */}
+      <div className="  text-black-300">
+        <div className="mx-auto max-w-6xl px-4 py-4 md:py-6">
+          <p className="text-center text-4xl font-extrabold leading-none tracking-tight md:text-6xl lg:text-[5.2rem]">
+            LET&apos;S WORK TOGETHER
+          </p>
+        </div>
       </div>
     </footer>
   );
-}
+};
+
+export default FooterCta;
