@@ -34,8 +34,12 @@ const Contact = ({ id }) => {
     setStatus({ type: null, message: "" });
 
     try {
-      const baseUrl =
+      let baseUrl =
         import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+      baseUrl = baseUrl.replace(/\/$/, ""); // remove trailing slash
+      if (!baseUrl.startsWith("http://") && !baseUrl.startsWith("https://")) {
+        baseUrl = `https://${baseUrl}`;
+      }
 
       const res = await fetch(`${baseUrl}/api/contact`, {
         method: "POST",
