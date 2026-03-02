@@ -121,7 +121,7 @@ const services = [
 const defaultCarouselState = { index: 1, animate: true };
 
 const ServicesComponent = ({ id }) => {
-  const [expandedService, setExpandedService] = useState(1);
+  const [expandedService, setExpandedService] = useState(null);
   const [carouselState, setCarouselState] = useState({});
 
   const toggleService = (serviceId) => {
@@ -188,8 +188,8 @@ const ServicesComponent = ({ id }) => {
               absolutely killer at
             </h2>
             <div className="absolute top-[48%] left-[44%] -translate-x-1/2 -translate-y-1/2 rotate-[-12deg] pointer-events-none">
-              <div className="relative w-10 h-12 sm:w-14 sm:h-14 left-12 sm:left-20 -bottom-6 sm:-bottom-10">
-                <StarburstBubble />
+              <div className="relative w-10 h-12 sm:w-14 sm:h-14 left-26 md:left-55  bottom-8 sm:-bottom-0">
+                <StarburstBubble name="Services"/>
               </div>
             </div>
           </div>

@@ -1,4 +1,4 @@
-const StarburstBubble = ({ text = "Services", className = " text-black", size = 100 }) => {
+const StarburstBubble = ({name, className = " text-black", size = 100 }) => {
   const points = 18;
   const outerRadius = size / 2;
   const innerRadius = outerRadius * 0.65;
@@ -24,7 +24,7 @@ const StarburstBubble = ({ text = "Services", className = " text-black", size = 
 
       </svg>
       <span className="relative z-10 font-bold text-starburst-foreground text-xl select-none">
-        {text}
+        {name}
       </span>
     </div>
   );

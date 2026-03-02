@@ -1,4 +1,5 @@
 import React from "react";
+import StarburstBubble from "./StarBubble";
 
 export default function Client({ id }) {
   return (
@@ -10,32 +11,10 @@ export default function Client({ id }) {
         </h1>
 
         {/* Transparent Yellow Sticker */}
-        <div className="absolute top-0 right-14% md:top-0 md:right-[40%] lg:right-[38%] lg:top-19 rotate-[-15deg] z-10 pointer-events-none">
-          <div className="w-24 h-24 sm:w-20 sm:h-20 md:w-28 md:h-28 opacity-90">
-            <svg viewBox="0 0 200 200" className="w-full h-full">
-              <polygon
-                points="
-                100,5 115,40 150,15 130,55 180,50
-                145,85 195,100 145,115 180,150
-                130,145 150,185 115,160 100,195
-                85,160 50,185 70,145 20,150
-                55,115 5,100 55,85 20,50
-                70,55 50,15 85,40
-                "
-                fill="#f4d94f"
-              />
-              <text
-                x="50%"
-                y="52%"
-                textAnchor="middle"
-                dominantBaseline="middle"
-                className="font-bold text-[20px] fill-black"
-              >
-                Testimonials
-              </text>
-            </svg>
-          </div>
-        </div>
+        { <div className="absolute top-0 right-14% md:top-0 md:right-[40%] lg:right-[38%] lg:top-19 rotate-[-15deg] z-10 pointer-events-none">
+           <StarburstBubble name="Testimonials"/>
+        </div> }
+       
       </div>
 
       {/* ================== TESTIMONIAL CARD ================== */}

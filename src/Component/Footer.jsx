@@ -213,7 +213,7 @@ export default function Footer() {
       font-bold
       leading-[0.83]
       tracking-[-2px]
-      scale-y-[1.3]
+      scale-y-[1.2]
       scale-x-[0.9]
       whitespace-nowrap
       select-none

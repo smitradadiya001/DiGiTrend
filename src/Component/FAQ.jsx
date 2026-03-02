@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp } from "lucide-react";
+import StarburstBubble from "./StarBubble";
 
 const faqs = [
   {
@@ -98,26 +99,7 @@ export default function FAQSection({ id }) {
           </h1>
 
           <div className="absolute top-[30%] left-1/3 -translate-x-1/2 md:-translate-x-[10%] z-20 pointer-events-none w-[120px] md:w-[160px] lg:w-[200px]">
-            <svg
-              viewBox="0 0 180 120"
-              className="w-full h-auto rotate-[-10deg] drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]"
-            >
-              <polygon
-                points="90,10 100,30 120,25 125,45 145,50 135,70 150,85 130,95 135,115 115,105 100,120 85,100 65,110 60,90 40,95 50,75 30,65 50,55 45,35 65,40 70,20"
-                fill="rgba(255, 215, 0, 0.7)"
-              />
-              <text
-                x="50%"
-                y="55%"
-                dominantBaseline="middle"
-                textAnchor="middle"
-                fontSize="24"
-                fontWeight="900"
-                fill="black"
-              >
-                FAQs
-              </text>
-            </svg>
+             <StarburstBubble name="FAQs"/>
           </div>
         </div>
 
