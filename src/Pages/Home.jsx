@@ -22,7 +22,7 @@ function Home() {
     <>
       <Hero id="hero" />
       <main className="flex flex-col gap-8 sm:gap-10 md:gap-0">
-        <Third />
+         <Third /> 
         <section>
           <FeatureCards id="features" />
         </section>

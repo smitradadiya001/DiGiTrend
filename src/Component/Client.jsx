@@ -21,7 +21,7 @@ export default function Client({ id }) {
 
       <div className="max-w-2xl mx-auto relative">
         {/* Yellow Card (Smaller Now) */}
-        <div className="bg-[#f4d96f] border-t-2 border-l-2 border-r-2 border-b-1  border-black rounded-t-3xl p-8">
+        <div className="bg-[#1E3A8A4D] border-t-2 border-l-2 border-r-2 border-b-1  border-black rounded-t-3xl p-8">
           <p className="text-black font-bold text-lg md:text-[22px] leading-[1.6]">
             “Boundaryz didn’t just build us a website — they built an
             experience. Every scroll, every click felt like it belonged to our

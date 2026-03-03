@@ -203,7 +203,7 @@ const ServicesComponent = ({ id }) => {
             const isOpen = expandedService === service.id;
 
             return (
-              <div key={service.id} className="bg-amber-100 rounded-[2rem] overflow-hidden border border-black/10">
+              <div key={service.id} className="bg-blue-900/30 rounded-[2rem] overflow-hidden border border-black/10">
                 <button
                   onClick={() => toggleService(service.id)}
                   className="w-full px-6 sm:px-10 py-6 sm:py-8 flex items-start justify-between text-left"

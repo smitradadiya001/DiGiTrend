@@ -178,7 +178,7 @@ const Contact = ({ id }) => {
           <motion.path
             d={framePath}
             fill="white"
-            stroke="#F6C700"
+            stroke="#1E3A8A"
             strokeWidth={isMobile ? "2.4" : "2"}
             vectorEffect="non-scaling-stroke"
             strokeLinecap="round"

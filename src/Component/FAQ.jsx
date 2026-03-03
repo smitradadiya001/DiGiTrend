@@ -65,7 +65,7 @@ const FAQItem = ({ question, answer, isOpen, onClick }) => {
           >
             <div
               className="
-                bg-amber-100 text-black
+                bg-[#1E3A8A4D] text-black
                 w-full md:w-[75%]
                 ml-auto
                 px-10 py-8
