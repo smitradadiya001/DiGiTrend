@@ -2,10 +2,17 @@ import React from "react";
 import { Instagram, Linkedin } from "lucide-react";
 
 const FooterCta = () => {
+  const scrollToContact = () => {
+    const section = document.getElementById("contact");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
-    <footer className="relative z-10 overflow-hidden bg-[#365ecb6d] text-black">
+    <footer className="relative z-10 overflow-hidden bg-blue-900/60 text-black">
       {/* Big circle background */}
-      <div className="pointer-events-none absolute left-1/2 top-0 z-[-1] h-[340px] w-[340px] -translate-x-1/2 rounded-full bg-[#1E3A8A1D] sm:h-[420px] sm:w-[420px] md:h-[510px] md:w-[510px]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 z-[-1] h-[340px] w-[340px] -translate-x-1/2 rounded-full bg-[#31394e1d] sm:h-[420px] sm:w-[420px] md:h-[510px] md:w-[510px]" />
 
       {/* Top row: left contact, center CTA text+button, right locations */}
       <div className="relative mx-auto flex max-w-6xl flex-col items-center gap-8 px-4 py-10 text-center md:flex-row md:items-start md:justify-between md:gap-10 md:py-20 md:text-left">
@@ -33,7 +40,11 @@ const FooterCta = () => {
           <p className="text-lg font-semibold md:text-2xl">
             Got a project? Want to collaborate?
           </p>
-          <button className="w-20px rounded-full bg-amber-900 px-7 py-3 text-sm font-semibold text-amber-50 shadow-[0_12px_30px_rgba(0,0,0,0.25)] transition hover:bg-amber-800 sm:w-auto md:text-base">
+          <button
+            type="button"
+            onClick={scrollToContact}
+            className="w-20px rounded-full bg-amber-900 px-7 py-3 text-sm font-semibold text-amber-50 shadow-[0_12px_30px_rgba(0,0,0,0.25)] transition hover:bg-amber-800 sm:w-auto md:text-base"
+          >
             Discuss your project
           </button>
         </div>

@@ -165,7 +165,7 @@ export default function SpiralBrands({ id }) {
 
       <div className="relative z-10 mb-10 px-4 text-center">
         <p className="text-[24px] md:text-[30px] tracking-[0.4em] uppercase text-gray-400 mb-2">
-          Trusted Partners
+          Our Sector
         </p>
       </div>
 

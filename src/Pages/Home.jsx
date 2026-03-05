@@ -8,6 +8,7 @@ import SpiralBrands from '../Component/Spiral'
 import CurvedImageScroll from '../Component/Graphics'
 import ServicesComponent from '../Component/Service'
 import OurWork from '../Component/OurWork'
+import Our_Client from '../Component/Our_Client'
 import ReviewSection from '../Component/Review'
 import Client from '../Component/Client'
 import FAQSection from '../Component/FAQ'
@@ -22,7 +23,7 @@ function Home() {
     <>
       <Hero id="hero" />
       <main className="flex flex-col gap-8 sm:gap-10 md:gap-0">
-         <Third /> 
+         <Third />
         <section>
           <FeatureCards id="features" />
         </section>
@@ -30,9 +31,11 @@ function Home() {
         <CurvedImageScroll id="design" />
         <ServicesComponent id="services" />
         <OurWork id="work" />
+
         <ReviewSection id="review" />
         <Contact id="contact" />
         <Client id="client_talk" />
+        <Our_Client id="our_clients" />
         <FAQSection id="faqs" />
         <Footer />
       </main>

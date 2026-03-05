@@ -107,7 +107,7 @@ export default function HangingImages({ id }) {
                     width={cardW - 20}
                     height={cardH - 50}
                     rx="10"
-                    fill="#1E3A8A4D"
+                    fill="rgba(30, 58, 138, 0.7)"
                    // opacity="0.9"
                   />
 

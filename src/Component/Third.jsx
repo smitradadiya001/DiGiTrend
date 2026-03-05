@@ -18,8 +18,8 @@ export default function Third() {
           We Create
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-center font-semibold leading-[0.95] tracking-[-0.03em] text-[32px] sm:text-[48px] md:text-[64px] lg:text-[74px]">
-          <span>Websites</span>
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-x-3 gap-y-3 text-center font-semibold leading-[0.95] tracking-[-0.03em] text-[35px] sm:text-[48px] md:text-[64px] lg:text-[74px]">
+          <span>Websites</span>{" "}
 
           <span className="third-float-around relative inline-block w-[120px] rounded-2xl border border-black/5 bg-white p-2.5 align-middle shadow-[0_10px_20px_rgba(0,0,0,0.12)] sm:w-[138px] md:w-[165px]">
             <span className="mb-1.5 block h-1.5 w-10 rounded bg-gray-200" />
@@ -48,7 +48,7 @@ export default function Third() {
             </span>
           </span>
 
-          <span>that </span>
+         {"  "} <span>that </span>
           <span>Sells</span>
           <span>&</span>
           <br />
@@ -58,8 +58,8 @@ export default function Third() {
        
          
            <span className="w-full">
-          <span >Ads</span>
-          <span>That</span> 
+          <span>Ads</span>{" "}
+          <span>That</span> {" "} 
            <span className="third-float-around-delay relative inline-block w-[120px] rounded-2xl border border-black/5 bg-white p-2.5 align-middle shadow-[0_10px_20px_rgba(0,0,0,0.12)] sm:w-[138px] md:w-[165px]">
             <span className="mb-1.5 block h-1.5 w-10 rounded bg-gray-200" />
             <span className="mb-1.5 block h-1.5 w-16 rounded bg-gray-200" />
@@ -88,7 +88,7 @@ export default function Third() {
                 />
               </svg>
             </span>
-          </span>
+          </span>{"  "}
           <span>Convert</span> </span>
         </div>
        
